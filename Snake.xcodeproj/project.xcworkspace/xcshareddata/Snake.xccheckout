@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>03FC6929-F03C-4AB4-B12F-03C3913A990C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Snake</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2F05D71CA9C8EB456A54D6CFFB925657E638E49A</key>
+		<string>https://github.com/mhtranbn/snake.git</string>
+		<key>36FE8097288520B6BA3B934DA92D231EA9E697CC</key>
+		<string>https://bitbucket.org/mhtran/snake-2025.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Snake.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2F05D71CA9C8EB456A54D6CFFB925657E638E49A</key>
+		<string>../../../Snake</string>
+		<key>36FE8097288520B6BA3B934DA92D231EA9E697CC</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/mhtran/snake-2025.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>36FE8097288520B6BA3B934DA92D231EA9E697CC</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2F05D71CA9C8EB456A54D6CFFB925657E638E49A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Snake</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>36FE8097288520B6BA3B934DA92D231EA9E697CC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>snake-2025</string>
+		</dict>
+	</array>
+</dict>
+</plist>
