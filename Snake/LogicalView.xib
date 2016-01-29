@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Zapfino.ttf">
+            <string>Zapfino</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogicalView" customModule="Snake" customModuleProvider="target">
             <connections>
                 <outlet property="backGround" destination="jO7-xO-9Zw" id="QaZ-Dd-Vhz"/>
+                <outlet property="bannerView" destination="zk3-fU-ch8" id="i3k-Br-Uhf"/>
                 <outlet property="fff" destination="Lgd-ZO-FXn" id="tFw-9Z-8oe"/>
                 <outlet property="play" destination="MMc-oa-GYB" id="Y6c-RM-FiT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="72q-u1-dW5"/>
@@ -18,8 +24,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" id="zk3-fU-ch8" customClass="GADBannerView">
+                    <rect key="frame" x="0.0" y="497" width="320" height="71"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snakeBGround.png" id="jO7-xO-9Zw">
-                    <rect key="frame" x="7" y="-35" width="320" height="568"/>
+                    <rect key="frame" x="7" y="-35" width="320" height="428"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MMc-oa-GYB">
@@ -49,9 +59,4 @@
         <image name="snakeBGround.png" width="320" height="400"/>
         <image name="startButton.png" width="60" height="60"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

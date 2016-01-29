@@ -11,6 +11,7 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 import Social
+//import GoogleMobileAds
 
 
 struct WorldSize {
@@ -79,9 +80,9 @@ class Snake {
         self.length = inLength
         
         let x:Int = self.worldSize.width
-        let y:Int = self.worldSize.height
+//        let y:Int = self.worldSize.height
         for i in 0...inLength {
-            var p:Point = Point(x:x + i , y: x)
+            let p:Point = Point(x:x + i , y: x)
             self.points.append(p)
         }
     }
@@ -126,7 +127,7 @@ class Snake {
     }
     
     func isHeadHitBody() -> Bool {
-        var headPoint = self.points[0]
+        let headPoint = self.points[0]
         for bodyPoint in self.points[1..<self.points.count] {
             if (bodyPoint.x == headPoint.x &&
                 bodyPoint.y == headPoint.y) {
@@ -154,7 +155,7 @@ protocol SnakeViewDelegate {
 class SnakeVC : UIView {
     var delegate:SnakeViewDelegate?
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.backgroundColor = UIColor(patternImage: UIImage(named: "BackgroundSnake.png")!)
         
@@ -173,10 +174,10 @@ class SnakeVC : UIView {
             if worldSize.width <= 0 || worldSize.height <= 0 {
                 return
             }
-            var vb = self.bounds.size.width
-            var vc = self.bounds.size.height
-            var w = Int(Float(self.bounds.size.width) / Float(worldSize.width))
-            var h = Int(Float(self.bounds.size.width) / Float(worldSize.width))
+//            var vb = self.bounds.size.width
+//            var vc = self.bounds.size.height
+            let w = Int(Float(self.bounds.size.width) / Float(worldSize.width))
+            let h = Int(Float(self.bounds.size.width) / Float(worldSize.width))
             UIColor.blueColor().set()
             let points = snake.points
             for point in points {
@@ -199,23 +200,14 @@ class Level {
 }
 
 
-class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADelegateProtocol {
+class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate {
     
     
-    var startAppAd: STAStartAppAd?
-    var startAppBanner: STABannerView?
-    var startAppAdAutoLoad: STAStartAppAd?
-    var startAppAdLoadShow: STAStartAppAd?
-    var startAppBannerAuto: STABannerView?
-    var startAppBannerFixed: STABannerView?
+    
     var hightScore: NSNumber?
     var scoretg: Int?
-    
     var heightScoreLable: UILabel?
-    
     var alert = UIAlertView()
-    var buttonBeep = AVAudioPlayer()
-    var secondBeep = AVAudioPlayer()
     var backgroundMusic = AVAudioPlayer()
     var t: Double = 0.016
     var snakeVC:SnakeVC?
@@ -227,29 +219,17 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     var audioPlayer = AVAudioPlayer()
     var eatQuery: SystemSoundID = 0
     var die: SystemSoundID = 0
-    var backgroundMusicPlayer: AVAudioPlayer!
-    
-    
-    
-    
+    var backgroundMusicP: AVAudioPlayer!
+    var playMusic: AVAudioPlayer!
     override func viewDidLoad() {
         super.viewDidLoad()
-        startAppAd = STAStartAppAd()
-        startAppAdAutoLoad = STAStartAppAd()
-        startAppAdLoadShow = STAStartAppAd()
-        
-        
         alert.delegate = self
-        buttonBeep = self.setupAudioPlayerWithFile("die", type:"mp3")
-        secondBeep = self.setupAudioPlayerWithFile("eat", type:"wav")
-        playBackgroundMusic("soundBackgroundtest.m4a")
-        
-        
+        playBackgroundMusic("soundBackgroundtest", ex: "m4a")
         self.snakeVC = SnakeVC(frame: self.view.bounds)
         self.navigationController?.navigationBar.translucent = false
-        self.snakeVC!.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.snakeVC!.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.view.insertSubview(self.snakeVC!, atIndex: 0)
-        if let view = self.snakeVC? {
+        if let view = self.snakeVC {
             view.delegate = self
             
         }
@@ -271,38 +251,34 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
         self.view.addSubview(scoreLabel!)
         scoreLabel?.center.x = self.view.bounds.size.width/2
         scoreLabel?.center.y = 70
-        var screenShotMethodtg : NSNumber? = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
+        let screenShotMethodtg : NSNumber? = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
         heightScoreLable = UILabel(frame: CGRect(x:0, y:0, width:200, height:60))
-        heightScoreLable?.text = highScoretg!.stringValue
+        heightScoreLable?.text = screenShotMethodtg!.stringValue
         heightScoreLable?.textAlignment = NSTextAlignment.Center
         heightScoreLable?.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
         self.view.addSubview(heightScoreLable!)
         heightScoreLable?.center.x = self.view.bounds.size.width/2
         heightScoreLable?.center.y = 90
-
-        
         let worldSize = WorldSize(width: 2, height: 2)
         self.snake = Snake(inSize: worldSize, length: 1)
         self.createQuarry()
         AudioServicesPlaySystemSound(eatQuery)
         startGame()
+//        let nbannerView = GADBannerView()
+//        nbannerView.adUnitID = "ca-app-pub-6539656833486891/3902372969"
+//        nbannerView.rootViewController = self
+//        let re = GADRequest()
+//        nbannerView.loadRequest(re)
+//        self.view.addSubview(nbannerView)
+
         
     }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-
     }
     
     // Rotating the banner for iOS less than 8.0
     override func  didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)  {
-        // notify StartApp auto Banner orientation change
-        startAppBannerAuto!.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
-        
-        // notify StartApp fixed position Banner orientation change
-        startAppBannerFixed!.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
-        
         super.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
     }
     
@@ -311,14 +287,41 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
         return true
     }
     
-    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
-        var path = NSBundle.mainBundle().pathForResource(file, ofType:type)
-        var url = NSURL.fileURLWithPath(path!)
-        var error: NSError?
-        var audioPlayer:AVAudioPlayer?
-        audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
-        return audioPlayer!
+    func playBackgroundMusic(filename: String, ex: String) {
+        let url = NSBundle.mainBundle().URLForResource(filename, withExtension: ex)
+        guard let newURL = url else {
+            print("Could not find file: \(filename)")
+            return
+        }
+        
+        do {
+            backgroundMusicP = try AVAudioPlayer(contentsOfURL: newURL)
+            backgroundMusicP.numberOfLoops = -1
+            backgroundMusicP.prepareToPlay()
+            backgroundMusicP.play()
+            
+        } catch let error as NSError {
+            print(error.description)
+        }
     }
+    
+    func playMusic(filename: String, ex: String) {
+        let url = NSBundle.mainBundle().URLForResource(filename, withExtension: ex)
+        guard let newURL = url else {
+            print("Could not find file: \(filename)")
+            return
+        }
+        
+        do {
+            playMusic = try AVAudioPlayer(contentsOfURL: newURL)
+            playMusic.prepareToPlay()
+            playMusic.play()
+            
+        } catch let error as NSError {
+            print(error.description)
+        }
+    }
+
     
     func swipe (gr:UISwipeGestureRecognizer) {
         let direction = gr.direction
@@ -347,13 +350,12 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     }
     
     func startGame() {
-//        startAppAdAutoLoad!.showAd()
         score = 0
         if (self.timer != nil) {
             return
         }
-        var wx = 16
-        var hx = floor(snakeVC!.bounds.size.height / (snakeVC!.bounds.size.width/CGFloat(wx)))
+        let wx = 16
+        let hx = floor(snakeVC!.bounds.size.height / (snakeVC!.bounds.size.width/CGFloat(wx)))
         let worldSize = WorldSize(width: wx, height: Int(hx))
         self.snake = Snake(inSize: worldSize, length: 2)
         self.createQuarry()
@@ -362,28 +364,21 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     }
     
     func endGame() {
-        
-        startAppBannerAuto = STABannerView(size: STA_AutoAdSize, autoOrigin: STAAdOrigin_Top, withView: self.view, withDelegate: nil);
-        self.view.addSubview(startAppBannerAuto!)
-        
-
-        
-        
         highScore()
-        var highScoretg : NSNumber? = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
+        let highScoretg : NSNumber? = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
         heightScoreLable?.text = highScoretg!.stringValue
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         screenShotMethod()
         self.timer!.invalidate()
         self.timer = nil
-        buttonBeep.play()
+        playMusic("die", ex:"mp3")
         showResult()
     }
     
     func screenShotMethod() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 0);
         self.view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         return image
     }
@@ -395,14 +390,10 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
             switch result {
             case SLComposeViewControllerResult.Cancelled:
                 self.showResult()
-                //Add code to deal with it being cancelled
-                //                break
                 
             case SLComposeViewControllerResult.Done:
                 self.showResult()
-                //Add code here to deal with it being completed
-                //Remember that dimissing the view is done for you, and sending the tweet to social media is automatic too. You could use this to give in game rewards?
-                //                break
+
             }
         }
         
@@ -422,12 +413,9 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
             result in
             switch result {
             case SLComposeViewControllerResult.Cancelled:
-                //Add code to deal with it being cancelled
                 self.showResult()
                 
             case SLComposeViewControllerResult.Done:
-                //Add code here to deal with it being completed
-                //Remember that dimissing the view is done for you, and sending the tweet to social media is automatic too. You could use this to give in game rewards?
                 self.showResult()
             }
         }
@@ -442,30 +430,10 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     }
 
     
-    func playBackgroundMusic(filename: String) {
-        let url = NSBundle.mainBundle().URLForResource(
-            filename, withExtension: nil)
-        if (url == nil) {
-            println("Could not find file: \(filename)")
-            return
-        }
-        
-        var error: NSError? = nil
-        backgroundMusicPlayer =
-            AVAudioPlayer(contentsOfURL: url, error: &error)
-        if backgroundMusicPlayer == nil {
-            println("Could not create audio player: \(error!)")
-            return
-        }
-        
-        backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
-    }
     
     func timerMethod(timer:NSTimer) {
         self.snake?.move()
-        var headHitBody = self.snake?.isHeadHitBody()
+        let headHitBody = self.snake?.isHeadHitBody()
         if headHitBody == true {
             self.endGame()
             return
@@ -474,7 +442,7 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
         if head?.x == self.fruit?.x &&
             head?.y == self.fruit?.y {
                 self.snake!.increaseLength(1)
-                secondBeep.play()
+                playMusic("eat", ex:"wav")
                 score = Int(score!) + 1
                 scoreLabel!.text = score!.stringValue
                 
@@ -518,15 +486,8 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     }
     
     func resetGame() {
-        for subview in view.subviews {
-            if subview is STABannerView {
-                println(subview)
-                subview.removeFromSuperview()
-            }
-        }
 
-        
-        backgroundMusicPlayer.play()
+        playMusic("die", ex: "mp3")
         let worldSize = WorldSize(width: 2, height: 2)
         self.snake = Snake(inSize: worldSize, length: 1)
         self.createQuarry()
@@ -535,7 +496,7 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
     }
     
     func showResult(){
-        backgroundMusicPlayer.pause()
+        backgroundMusicP.pause()
         self.scoreLabel?.hidden
         alert.title = "Game over! Your score is \(score!.stringValue)."
         alert.message = "To continue playing, hit 'Play Again'"
@@ -584,7 +545,7 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
         var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
         
         //Check if score is higher than NSUserDefaults stored value and change NSUserDefaults stored value if it's true
-        var scoretg: Int = Int(score!) * 1
+        let scoretg: Int = Int(score!) * 1
         if scoretg > highScore
         {
             NSUserDefaults.standardUserDefaults().setInteger(scoretg, forKey: "highscore")
@@ -593,17 +554,14 @@ class MainVC: UIViewController, AVAudioPlayerDelegate, SnakeViewDelegate,STADele
         }
         return highScore;
     }
-    
-    
 
-
-    
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
 //         notify StartApp auto Banner orientation change
-        startAppBannerAuto!.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        startAppBannerFixed!.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        if #available(iOS 8.0, *) {
+            super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
 }

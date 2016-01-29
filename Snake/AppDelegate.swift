@@ -17,23 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        var firstView = LogicalView(nibName: "LogicalView", bundle: nil)
+        let firstView = LogicalView(nibName: "LogicalView", bundle: nil)
 //        var navifationController = UINavigationController(rootViewController: firstView)
         window?.rootViewController = firstView
         
         window?.makeKeyAndVisible()
-        var sdk: STAStartAppSDK = STAStartAppSDK.sharedInstance();
-        sdk.appID = "202227664"
-        sdk.devID = "102348334"
-        sdk.preferences = STASDKPreferences.prefrencesWithAge(22, andGender: STAGender_Male)
-        var splashPreferences : STASplashPreferences = STASplashPreferences()
-        splashPreferences.splashMode = STASplashModeTemplate
-        splashPreferences.splashTemplateTheme = STASplashTemplateThemeOcean;
-        splashPreferences.splashLoadingIndicatorType = STASplashLoadingIndicatorTypeDots;
-        splashPreferences.splashTemplateIconImageName = "SnakeIconStart";
-        splashPreferences.splashTemplateAppName = "Snake 2025";
-        
-        sdk.showSplashAdWithPreferences(splashPreferences)
         // Override point for customization after application launch.
         return true
     }

@@ -8,5 +8,5 @@
 
 #ifndef Snake_Snake_h
 #define Snake_Snake_h
-#import <StartApp/StartApp.h>
+
 #endif

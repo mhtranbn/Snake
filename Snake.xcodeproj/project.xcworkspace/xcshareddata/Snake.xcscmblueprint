@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "36FE8097288520B6BA3B934DA92D231EA9E697CC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "36FE8097288520B6BA3B934DA92D231EA9E697CC" : 0,
+    "161223EE1A86AE5D1EE80F87CF0D486BBAD28169" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "03FC6929-F03C-4AB4-B12F-03C3913A990C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "36FE8097288520B6BA3B934DA92D231EA9E697CC" : "snake-2025",
+    "161223EE1A86AE5D1EE80F87CF0D486BBAD28169" : "Snake"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Snake",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Snake.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mhtranbn\/snake.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "161223EE1A86AE5D1EE80F87CF0D486BBAD28169"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/mhtran\/snake-2025.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "36FE8097288520B6BA3B934DA92D231EA9E697CC"
+    }
+  ]
+}
